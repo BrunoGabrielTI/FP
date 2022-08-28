@@ -268,35 +268,4 @@ jQuery(function ($) {
 		}
 		mediaPopup();
 	});
-	var form = document.getElementById("contact-form");
-    
-    async function handleSubmit(event) {
-      event.preventDefault();
-      var status = document.getElementById("status");
-      var data = new FormData(event.target);
-      fetch(event.target.action, {
-        method: form.method,
-        body: data,
-        headers: {
-            'Accept': 'application/json'
-        }
-      }).then(response => {
-        if (response.ok) {
-          status.innerHTML = "Obrigado! Recebemos sua solicitação e iremos responder em breve!";
-          form.reset()
-        } else {
-          response.json().then(data => {
-            if (Object.hasOwn(data, 'errors')) {
-              status.innerHTML = data["errors"].map(error => error["message"]).join(", ")
-            } else {
-              status.innerHTML = "Ops, houve um problema. Sua solicitação não foi enviada."
-            }
-          })
-        }
-      }).catch(error => {
-        status.innerHTML = "Ops, houve um problema. Sua solicitação não foi enviada."
-      });
-    }
-    form.addEventListener("submit", handleSubmit)
-
 });
